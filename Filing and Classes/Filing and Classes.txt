@@ -1,0 +1,355 @@
+// Filing and Classes.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include <iostream>
+#include"student.h"
+#include<fstream>
+using namespace std;
+int main()
+{
+	/*int size;
+	cout <<"Enter the size : ";
+	cin >>size;
+	fstream file("student.dat", ios::out | ios::binary );
+	file.write((char*)&size, sizeof(size));
+	student*s = new student[size];
+	//calling constructor for each index of array
+		for (int i = 0; i < size; i++) 
+		{
+			s[i] = student(0, 0, 0, 0, 0, 0,size);
+		}
+	// Add Function
+		for (int i = 0; i < size; i++)
+		{
+			s[i].add(s,i);
+			file.write((char*)&s[i], sizeof(s[i]));
+		}
+	file.close();*/ 
+	int cursize = 0, maxsize;
+	fstream file("student.dat", ios::in | ios::binary);
+	file.read((char*)&cursize, sizeof(cursize));
+	maxsize = cursize + 5;
+	// allocating dynamic array of Size maxsize using new keyword
+	student* s = new student[maxsize];
+	////calling constructor for each index of array
+	//	for (int i = 0; i < maxsize; i++) 
+	//	{
+	//		s[i] = student(0, 0, 0, 0, 0, 0,0);
+	//	}
+	//Reading data from file
+		for (int i = 0; i < cursize; i++)
+		{
+			file.read((char*)&s[i], sizeof(s[i]));
+			
+		}
+		char choice;
+		cout << endl;
+		cout << "                Menu options" << endl;
+		cout << endl;
+		cout << "To Add record         Press A/a" << endl;
+		cout << "To Modify record      press M/m" << endl;
+		cout << "To Delete record      Press D /d" << endl;
+		cout << "To Search record      Press S/s" << endl;
+		cout << "To Print record       Press P/p" << endl;
+		cout << "To Quit               Press Q/w" << endl;
+		cout << "To Exist              Press E/e" << endl;
+		cout << endl;
+		cout << "Enter the choice : ";
+		cin >> choice;
+		cout << endl;
+		do
+		{
+			switch (choice)
+			{
+			case 'p':
+			case 'P':
+				for (int i = 0; i < cursize; i++)
+				{
+					s[i].print(s, cursize, i);
+				}
+				break;
+			case'a':
+			case 'A':
+				if (cursize == maxsize)
+				{
+					cout << "You can not add any record because the adding limit is 5" << endl;
+				}
+				else
+				{
+					int i;
+					char choice = 'y';
+					for (i = cursize; i < maxsize && choice == 'y' || choice == 'Y'; i++)
+					{
+						s[i].add(s,i);
+						cout << "Do you want to add another record press Y otherwise N : ";
+						cin >> choice;
+					}
+					cursize = i;
+				}
+				break;
+			case 'F':
+			case 'f':
+			{
+				int id, r = 0;
+				cout << "Enter the ID which you want to search : ";
+				cin >> id;
+				for (int i = 0; i < cursize; i++)
+				{
+					r = s[i].find(s, i, id);
+					if (r == 1)
+					{
+						break;
+					}
+				}
+				if (r == 0)
+				{
+					cout << "Id not found" << endl;
+				}
+				break;
+			}	
+			case 'd':
+			case 'D':
+			{
+				int id,r = 0;
+				cout << "Enter the ID which you want to delete : ";
+				cin >> id;
+				for (int i = 0; i < cursize; i++)
+				{
+					r = s[i].del(s, cursize, i,id);
+					if (r == 1)
+					{
+						break;
+					}
+				}
+				if (r == 0)
+				{
+					cout << "Id not found" << endl;
+				}
+				break;
+			}	
+			case 'M':
+			case 'm':
+			{
+				int id, r = 0;
+				cout << "Enter the ID which you want to Modify : ";
+				cin >> id;
+				for (int i = 0; i < cursize; i++)
+				{
+					r = s[i].mod(s, i, id);
+					if (r == 1)
+					{
+						break;
+					}
+				}
+				if (r == 0)
+				{
+					cout << "Id not found" << endl;
+				}
+				break;
+
+			}
+			case 'q':
+			case 'Q':
+			{
+				fstream myfile("student.dat", ios::out | ios::binary);
+				myfile.write((char*)&cursize, sizeof(cursize));
+				for (int i = 0; i < cursize; i++)
+				{
+					myfile.write((char*)&s[i], sizeof(s[i]));
+				}
+				myfile.close();
+				break;
+			}
+			}
+			cout << endl;
+			cout << "                Menu options" << endl;
+			cout << endl;
+			cout << "To Add record         Press A/a" << endl;
+			cout << "To Modify record      press M/m" << endl;
+			cout << "To Delete record      Press D /d" << endl;
+			cout << "To Search record      Press S/s" << endl;
+			cout << "To Print record       Press P/p" << endl;
+			cout << "To Quit               Press Q/w" << endl;
+			cout << "To Exist              Press E/e" << endl;
+			cout << endl;
+			cout << "Enter the choice : ";
+			cin >> choice;
+			cout << endl;
+		} while (choice != 'e' && choice != 'E');
+}
+
+
+
+
+#pragma once
+class student
+{
+private:
+	int id;
+	char name[20];
+	int marks;
+	int smes;
+    int d, m, y;
+public:
+	student();
+	//student(int, int, int, int, int, int,int);
+	void add(student [],int);
+	void print(student[], int,int);
+	int find(student[], int,int);
+	int del(student [], int&,int,int);
+	int mod(student[],int,int);
+};
+
+
+
+#include"student.h"
+#include<iostream>
+#include<string>
+using namespace std;
+// Default Constructor
+student::student()
+{
+	id = 0;
+	marks = 0;
+	smes = 0;
+    d = 0;
+	m = 0;
+    y = 0;
+	strcpy_s(name,"bilal");
+}
+//// Parametrized Constructor
+//student::student(int x, int y, int z, int a, int b, int c,int s)
+//{
+//	id = x;
+//    marks = y;
+//	smes = z;
+//	d=a;
+//	m=b;
+//	y = c;
+//	size = s;
+//}
+void student::add(student s[],int i)
+{
+		cout << "Enter the data of the " << i + 1 << " Student " << endl;
+		s[i].id = i + 1;
+		cout << "The ID is : " << s[i].id << endl;
+		cin.ignore(10, '\n');
+		cout << "Enter the name : ";
+		cin.get(s[i].name, 20);
+		cin.ignore(10, '\n');
+		cout << "Enter the date of birth  " << endl;
+		cout << "Enter the date :  ";
+		cin >> s[i].d;
+		cout << "Enter the month : ";
+		cin >> s[i].m;
+		cout << "Enter the year :  ";
+	    cin >> s[i].y;
+		cout << "Enter the marks : ";
+		cin >> s[i].marks;
+		cout << "Enter the smester : ";
+		cin >> s[i].smes;
+	
+}
+void student::print(student s[], int size ,int i)
+{
+		cout << "The Data of the " << i + 1 << " Student " << endl;
+		cout << "The Id is : " << s[i].id << endl;
+		cout << "The Name is : " << s[i].name << endl;
+		cout << "The Date of birth is : " << s[i].d << "/" << s[i].m << "/" << s[i].y << endl;
+		cout << "The Marks is : " << s[i].marks << endl;
+		cout << "The Smester is : " << s[i].smes << endl;
+		cout << ".........................................." << endl;
+}
+int student::find(student s[], int j,int id)
+{
+
+        if (id == s[j].id)
+		{
+			cout << "The Name is : " << s[j].name << endl;
+			cout << "The Date of birth is : " << s[j].d << "/" << s[j].m << "/" << s[j].y << endl;
+			cout << "The Marks is : " << s[j].marks << endl;
+			cout << "The Smester is : " << s[j].smes << endl;
+			return 1;
+		}
+		return 0;
+} 
+int student::del(student s[], int& size,int j,int id)
+{
+	int  k = 0;
+            
+	    if (id == s[j].id)
+		{
+			for (int i = j; i < size; i++)
+			{
+				s[i].id = s[i + 1].id;
+				while (s[i + 1].name[k])
+				{
+					s[i].name[k] = s[i + 1].name[k];
+					k++;
+				}
+				s[i].name[k] = '\0';
+				s[i].d = s[i + 1].d;
+				s[i].m = s[i + 1].m;
+				s[i].y = s[i + 1].y;
+				s[i].marks = s[i + 1].marks;
+				s[i].smes = s[i + 1].smes;
+			}
+			size--;
+			return 1;
+		}
+		return 0;
+}
+int student::mod(student s[], int j, int id)
+{
+	char choice;
+
+	if (id == s[j].id)
+	{
+		cout << "                Modify Options" << endl;
+		cout << endl;
+		cout << "To Modify Name         press N/n" << endl;
+		cout << "To Modify Date         press D/d" << endl;
+		cout << "To Modify Month        press M /m" << endl;
+		cout << "To Modify Year         press Y/y" << endl;
+		cout << "To Modify Smester      press S/s" << endl;
+		cout << "To Modify Marks        press R/r" << endl;
+		cout << "Enter the Choice : ";
+		cin >> choice;
+		switch (choice)
+		{
+		case 'N':
+		case 'n':
+			cin.ignore(10, '\n');
+			cout << "Enter the name : ";
+			cin.get(s[j].name, 20);
+			cin.ignore(10, '\n');
+			break;
+		case 'Y':
+		case 'y':
+			cout << "Enter the Year : ";
+			cin >> s[j].y;
+			break;
+		case 'M':
+		case 'm':
+			cout << "Enter the Month : ";
+			cin >> s[j].m;
+			break;
+		case 'D':
+		case 'd':
+			cout << "Enter the Date : ";
+			cin >> s[j].d;
+			break;
+		case 'R':
+		case 'r':
+			cout << "Enter the Marks : ";
+			cin >> s[j].marks;
+			break;
+		case 'S':
+		case 's':
+			cout << "Enter the Smester : ";
+			cin >> s[j].smes;
+			break;
+		}
+		return 1;
+	}
+	return 0;
+}
