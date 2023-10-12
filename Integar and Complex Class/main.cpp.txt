@@ -1,0 +1,306 @@
+// Operator Overloading.cpp : This file contains the 'main' function. Program execution begins and ends there.
+#include<iostream>
+#include"complex.h"
+#include"integar.h"
+using namespace std;
+int main()
+{
+	char choice;
+	cout << endl;
+	cout << "                Classes" << endl;
+	cout << "..................................................." << endl;
+	cout << " For Complex Numbers Class                 Press C/c" << endl;
+	cout << " For Integar Set Class                     Press I/i" << endl;
+	cout << "..................................................." << endl;
+	cout << "Enter the Choice : ";
+	cin >> choice;
+	cout << endl;
+	cout << endl;
+	do
+	{
+		switch (choice)
+		{
+		case 'c':
+		case 'C':
+		{
+			char choice;
+			Complex c1, c2, c3;
+			cout << "Enter the first Complex Number" << endl;
+			cin >> c1;
+			cout << "Enter the Second Complex Number" << endl;
+			cin >> c2;
+			cout << "     Arithmatic Operators" << endl;
+			cout << endl;
+			cout << "Addition              :          Press A/a" << endl;
+			cout << "Subtraction           :          Press S/s" << endl;
+			cout << "Multiplication        :          Press M/m" << endl;
+			cout << "Division              :          Press D/d" << endl;
+			cout << "Increment             :          Press I/i" << endl;
+			cout << "Decrement             :          Press C/c" << endl;
+			cout << endl;
+			cout << "Enter the Choice : ";
+			cin >> choice;
+			do
+			{
+				switch (choice)
+				{
+				case'a':
+				case'A':
+					c3 = c1 + c2;
+					cout << c3;
+					break;
+				case's':
+				case'S':
+					c3 = c1 - c2;
+					cout << c3;
+					break;
+				case'm':
+				case'M':
+					c3 = c1 * c2;
+					cout << c3;
+					break;
+				case'd':
+				case'D':
+					cin >> c2;
+					c3 = c1 / c2;
+					cout << c3;
+					break;
+				case'I':
+				case'i':
+					cout << "The Pre Increment is" << endl;
+					(++c1).print();
+					cout << c1;
+					cout << "The Post Increment is" << endl;
+					(c2++).print();
+					cout << c2;
+					break;
+				case 'c':
+				case 'C':
+					cout << "The Pre Decrement is" << endl;
+					(--c1).print();
+					cout << c1;
+					cout << "The Post Decrement is" << endl;
+					(c2--).print();
+					cout << c2;
+					break;
+				}
+				cout << endl;
+				cout << "     Arithmatic Operators" << endl;
+				cout << endl;
+				cout << "Addition              :          Press A/a" << endl;
+				cout << "Subtraction           :          Press S/s" << endl;
+				cout << "Multiplication        :          Press M/m" << endl;
+				cout << "Division              :          Press D/d" << endl;
+				cout << "Increment             :          Press I/i" << endl;
+				cout << "Decrement             :          Press C/c" << endl;
+				cout << "Exit                 :          Press E/e" << endl;
+				cout << endl;
+				cout << "Enter the Choice : ";
+				cin >> choice;
+
+			} while (choice != 'e' && choice != 'E');
+			break;
+		}
+		case 'I':
+		case'i':
+		{
+			char choice;
+			cout << "     Menu Options" << endl;
+			cout << endl;
+			cout << "Parametrized Constructor      :          Press P/p" << endl;
+			cout << "Input using << Operator       :          Press I/i" << endl;
+			cout << "Delete Element                :          Press D/d" << endl;
+			cout << "Insert Element                :          Press N/n" << endl;
+			cout << "Union of Sets                 :          Press U/u" << endl;
+			cout << "Intersection of Sets          :          Press S/s" << endl;
+			cout << "Difference of Sets            :          Press Z/z" << endl;
+			cout << "Complement of Set             :          Press C/c" << endl;
+			cout << "Relational Operators          :          Press R/r" << endl;
+			cout << endl;
+			cout << "Enter the Choice : ";
+			cin >> choice;
+			do
+			{
+				switch (choice)
+				{
+				case 'P':
+				case 'p':
+				{
+					const int size = 101;
+					int arr[size], n;
+					cout << "Enter the size of Array : ";
+					cin >> n;
+					while (n <= 0 && n >= size)
+					{
+						cout << "Size must be Positive and <= 101 " << endl;
+						cout << "Enter the size of Array again : ";
+						cin >> n;
+					}
+					for (int i = 0; i < n; i++)
+					{
+						cout << "Enter the Element of Array at Index " << i + 1<<" : ";
+						cin >> arr[i];
+					}
+					Integarset s(arr,n);
+					cout << "Input using the Parametrized Constructor is : ";
+					cout << "Set = ";
+					cout << s;
+					break;
+				}
+				case 'I':
+				case 'i':
+				{
+					Integarset s;
+					cin >> s;
+					cout << "Input using the >> Operator is : ";
+					cout << " Set = ";
+					cout << s;
+					break;
+				}
+				case 'd':
+				case 'D':
+				{
+					Integarset s;
+					cin >> s;
+					cout << "Input using the >> Operator is : ";
+					cout << "Set = ";
+					cout << s << endl;
+					s.delelem();
+					cout << "After Deletion" << endl;
+					cout << "Set = ";
+					cout << s;
+					break;
+				}
+				case 'N':
+				case 'n':
+				{
+					Integarset s;
+					cin >> s;
+					cout << "Input using the >> Operator is : ";
+					cout << "Set = ";
+					cout << s << endl;
+					s.insertelem();
+					cout << "After Insertion" << endl;
+					cout << "Set = ";
+					cout << s;
+					break;
+				}
+				case 'U':
+				case 'u':
+				{
+					Integarset s1, s2, s3;
+					cout << "Enter the Values for Set 1" << endl;
+					cin >> s1;
+					cout << "Enter the Values for Set 2" << endl;
+					cin >> s2;
+					s3 = s1 + s2;
+					cout << "Union of these two Sets" << endl;
+					cout << "Set = ";
+					cout << s3;
+					break;
+				}
+				case 'S':
+				case 's':
+				{
+					Integarset s1, s2, s3;
+					cout << "Enter the Values for Set 1" << endl;
+					cin >> s1;
+					cout << "Enter the Values for Set 2" << endl;
+					cin >> s2;
+					s3 = s1 * s2;
+					cout << "Intersection of these two Sets" << endl;
+					cout << "Set = ";
+					cout << s3;
+					break;
+
+				}
+				case 'Z':
+				case 'z':
+				{
+					Integarset s1, s2, s3;
+					cout << "Enter the Values for Set 1" << endl;
+					cin >> s1;
+					cout << "Enter the Values for Set 2" << endl;
+					cin >> s2;
+					s3 = s1 - s2;
+					cout << "Difference of these two Sets" << endl;
+					cout << "Set = ";
+					cout << s3;
+					break;
+
+				}
+				case 'C':
+				case 'c':
+				{
+					Integarset s1;
+					cout << "Enter the Values for Set " << endl;
+					cin >> s1;
+					~s1;
+					cout << "Complement of the Set" << endl;
+					cout << "Set = ";
+					cout << s1;
+					break;
+
+				}
+				case'R':
+				case'r':
+					Integarset s1, s2;
+					cout << "Enter the Values for Set 1" << endl;
+					cin >> s1;
+					cout << "Enter the Values for Set 2" << endl;
+					cin >> s2;
+					if (s1<s2)
+					{
+						cout << "First set is Smaller than Second Set" << endl;
+					}
+					if (s1 > s2)
+					{
+						cout << "First set is Greater than Second Set" << endl;
+					}
+					if (s1 <= s2)
+					{
+						cout << "First set is Less than equal to Second Set" << endl;
+					}
+					if (s1 >= s2)
+					{
+						cout << "First set is Greater than equal to  Second Set" << endl;
+					}
+					if (s1 == s2)
+					{
+						cout << "First set is  equal to  Second Set" << endl;
+					}
+					break;
+                }
+				cout << endl;
+				cout << "     Menu Options" << endl;
+				cout << endl;
+				cout << "Parametrized Constructor      :          Press P/p" << endl;
+				cout << "Input using << Operator       :          Press I/i" << endl;
+				cout << "Insert Element                :          Press N/n" << endl;
+				cout << "Union of Sets                 :          Press U/u" << endl;
+				cout << "Intersection of Sets          :          Press S/s" << endl;
+				cout << "Difference of Sets            :          Press Z/z" << endl;
+				cout << "Relational Operators          :          Press R/r" << endl;
+				cout << "Exit                         :          Press E/e" << endl;
+				cout << endl;
+				cout << "Enter the Choice : ";
+				cin >> choice;
+
+			} while (choice != 'e' && choice != 'E');
+		}
+			
+			
+		}
+		cout << endl;
+		cout << "                Menu Options" << endl;
+		cout << endl;
+		cout << "                Classes" << endl;
+		cout << "..................................................." << endl;
+		cout << " For Complex Numbers Class                 Press C/c" << endl;
+		cout << " For Integar Set Class                     Press I/i" << endl;
+		cout << " For Exit                                 Press E/e" << endl;
+		cout << "..................................................." << endl;
+		cout << "Enter the Choice : ";
+		cin >> choice;
+	} while (choice !='e' && choice!='E');
+}

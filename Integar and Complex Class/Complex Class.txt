@@ -1,0 +1,165 @@
+#pragma once
+#include<iostream>
+using namespace std;
+
+class Complex
+{
+private:
+	double real, img;
+public:
+	Complex();
+	Complex(double);
+	Complex(double, double);
+	double getreal() const;
+	double getimg() const;
+	void setreal(double);
+	void setimg(double);
+	Complex operator+(const Complex& c);
+	Complex operator-(const Complex& c);
+	Complex operator*(const Complex& c);
+	Complex operator/(const Complex& c);
+	Complex operator++();
+	Complex operator++(int);
+	Complex operator--();
+	Complex operator--(int);
+	void print() const;
+	friend istream& operator>>(istream& input, Complex& c);
+	friend ostream& operator<<(ostream& output, Complex& c);
+	Complex& operator+=(const Complex& c);
+	Complex& operator-=(const Complex& c);
+	Complex& operator*=(const Complex& c);
+	Complex& operator/=(const Complex& c);
+};
+
+
+
+#include<iostream>
+using namespace std;
+#include"complex.h"
+Complex::Complex()
+{
+	real = img = 0;
+}
+Complex::Complex(double r)
+{
+	real = r;
+	img = 0;
+}
+Complex::Complex(double r, double i)
+{
+	real = r;
+	img = i;
+}
+double Complex::getreal() const
+{
+	return real;
+}
+double Complex::getimg() const
+{
+	return img;
+}
+void Complex::setreal(double r)
+{
+	real = r;
+}
+void Complex::setimg(double i)
+{
+	img = i;
+}
+Complex Complex::operator+(const Complex& c)
+{
+	Complex temp;
+	temp.real = real + c.real;
+	temp.img = img + c.img;
+	return temp;
+}
+Complex Complex::operator-(const Complex& c)
+{
+	Complex temp;
+	temp.real = real - c.real;
+	temp.img = img - c.img;
+	return temp;
+}
+Complex Complex::operator*(const Complex& c)
+{
+	Complex temp;
+	temp.real = (real * c.real) - (img * c.img);
+	temp.img = (real * c.img) - (img * c.real);
+	return temp;
+}
+Complex Complex::operator/(const Complex& c)
+{
+	Complex temp;
+	temp.real = (real * c.real) + (img * c.img) / (c.real * c.real) + (c.img * c.img);
+	temp.img = (img * c.real) - (real * c.img) / (c.real * c.real) + (c.img * c.img);
+	return temp;
+}
+Complex Complex::operator++()
+{
+	real++;
+	img++;
+	return *this;
+}
+Complex Complex::operator++(int)
+{
+	Complex c = *this;
+	++(*this);
+	return c;
+}
+Complex Complex::operator--()
+{
+	real--;
+	img--;
+	return *this;
+}
+Complex Complex::operator--(int)
+{
+	Complex c = *this;
+	--(*this);
+	return c;
+}
+void Complex::print() const
+{
+	cout << "The Resultant Complex Number is : ";
+	cout << real;
+	cout << " + "; cout << img; cout << "i\n";
+}
+istream& operator>>(istream& input, Complex& c)
+{
+	cout << "Enter the Real Part :";
+	input >> c.real;
+	cout << "Enter the Imaginary Part :";
+	input >> c.img;
+	return input;
+}
+ostream& operator<<(ostream& output, Complex& c)
+{
+	cout << "The Resultant Complex Number is : ";
+	output << c.real;
+	cout << " + "; output << c.img; cout << "i\n";
+	return output;
+}
+Complex& Complex::operator+=(const Complex& c)
+{
+	real = real + c.real;
+	img = img + c.img;
+	return *this;
+}
+Complex& Complex::operator-=(const Complex& c)
+{
+    real = real - c.real;
+	img = img - c.img;
+	return *this;
+}
+Complex& Complex::operator*=(const Complex& c)
+{
+	real = (real * c.real) - (img * c.img);
+    img = (real * c.img) - (img * c.real);
+	return *this;
+}
+Complex& Complex::operator/=(const Complex& c)
+{
+	real = (real * c.real) + (img * c.img) / (c.real * c.real) + (c.img * c.img);
+	img = (img * c.real) - (real * c.img) / (c.real * c.real) + (c.img * c.img);
+	return *this;
+}

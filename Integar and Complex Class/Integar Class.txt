@@ -1,0 +1,253 @@
+
+#pragma once
+#include<iostream>
+using namespace std;
+
+class Integarset
+{
+	int set[101];
+public:
+	Integarset();
+	Integarset(int arr[],int size);
+	void emptyset();
+	void insertelem();
+	void delelem();
+	Integarset operator+(const Integarset& s);
+	Integarset operator*(const Integarset& s);
+	Integarset operator-(const Integarset& s);
+	Integarset operator~();
+	bool operator<(const Integarset& s);
+	bool operator>(const Integarset& s);
+	bool operator<=(const Integarset& s);
+	bool operator>=(const Integarset& s);
+	bool operator==(const Integarset& s);
+    friend istream& operator>>(istream& input, Integarset& s);
+	friend ostream& operator<<(ostream& output, Integarset& s);
+};
+
+
+#include"integar.h"
+#include<iostream>
+using namespace std;
+void Integarset::emptyset()
+{
+	for (int i=0;i<101;i++)
+	{
+		set[i] = 0;
+	}
+}
+Integarset::Integarset()
+{
+	emptyset();
+}
+Integarset::Integarset(int arr[], int size)
+{
+	emptyset();
+	for (int i = 0; i < size; i++)
+	{
+		if (arr[i] >= 0 && arr[i] <= 100)
+		{
+			set[arr[i]] = 1;
+		}
+		else
+		{
+			cout << "The value " << arr[i] << " is ignored because it is out of Range" << endl;
+		}
+	}
+}
+istream& operator>>(istream& input, Integarset& s)
+{
+	int n;
+        cout << "Enter -1 to Stop Taking Input" << endl;
+		for (int i = 0; i < 101; i++)
+		{
+			cout << "Enter the Value which you want to Insert : ";
+			cin >> n;
+			if (n==-1) break;
+			if (n >= 0 && n <= 100)
+			{
+				s.set[n] = 1;
+			}
+			else
+			{
+				cout << "The value " << n<< " is ignored because it is out of Range" << endl;
+			}
+		}
+		return input;
+}
+ostream& operator<<(ostream& output, Integarset& s)
+{
+	bool empty = true;
+	cout << "{";
+	for (int i = 0; i < 101; i++)
+	{
+		if (s.set[i] == 1)
+		{
+			cout << i << ",";
+			empty = false;
+		}
+	}
+	if (!empty) cout << "}";
+	if (empty)
+	{
+		cout << "emty set}" << endl;
+	}
+	return output;
+}
+void Integarset::insertelem()
+{ 
+	int n;
+	cout << "Enter the Number which you want to Insert : ";
+	cin >> n;
+	while (n <= 0 && n >= 100)
+	{
+		cout << "The value " <<n<< " is ignored because it is out of Range" << endl;
+		cout << "Enter the Number which you want to Insert again : ";
+		cin >> n;
+	}
+	set[n] = 1;
+}
+void Integarset::delelem()
+{
+	int n;
+	cout << "Enter the Number which you want to Delete : ";
+	cin >> n;
+	while (n <= 0 && n >= 100)
+	{
+		cout << "The value " << n << " is ignored because it is out of Range" << endl;
+		cout << "Enter the Number which you want to Delete again : ";
+		cin >> n;
+	}
+	set[n] = 0;
+}
+Integarset Integarset::operator+(const Integarset& s)
+{
+	Integarset s1;
+	for (int i = 0; i <101; i++)
+	{
+		if (set[i]==1 || s.set[i]==1)
+		{
+			s1.set[i] = 1;
+		}
+	}
+	return s1;
+}
+Integarset Integarset::operator*(const Integarset& s)
+{
+	Integarset s1;
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1 && s.set[i] == 1)
+		{
+			s1.set[i] = 1;
+		}
+	}
+	return s1;
+}
+Integarset Integarset::operator-(const Integarset& s)
+{
+	Integarset s1;
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1 && s.set[i] == 0)
+		{
+			s1.set[i] = 1;
+		}
+	}
+	return s1;
+}
+Integarset Integarset::operator~()
+{
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1)
+		{
+			set[i] = 0;
+		}
+		else
+		{
+			set[i] = 1;
+		}
+	}
+    return *this;
+}
+bool Integarset::operator<(const Integarset& s)
+{
+	int k=0, z = 0;
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1)
+		{
+			k++;
+		}
+		if (s.set[i] == 1)
+		{
+			z++;
+		}
+	}
+	return (k < z);
+}
+bool Integarset::operator>(const Integarset& s)
+{
+	int k=0, z = 0;
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1)
+		{
+			k++;
+		}
+		if (s.set[i] == 1)
+		{
+			z++;
+		}
+	}
+	return (k > z);
+}
+bool Integarset::operator<=(const Integarset& s)
+{
+	int k=0,z = 0;
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1)
+		{
+			k++;
+		}
+		if (s.set[i] == 1)
+		{
+			z++;
+		}
+	}
+	return (k <= z);
+}
+bool Integarset::operator>=(const Integarset& s)
+{
+	int k=0, z = 0;
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1)
+		{
+			k++;
+		}
+		if (s.set[i] == 1)
+		{
+			z++;
+		}
+	}
+	return (k >= z);
+}
+bool Integarset::operator==(const Integarset& s)
+{
+	int k = 0, z = 0;
+	for (int i = 0; i < 101; i++)
+	{
+		if (set[i] == 1)
+		{
+			k++;
+		}
+		if (s.set[i] == 1)
+		{
+			z++;
+		}
+	}
+	return (k == z);
+}
