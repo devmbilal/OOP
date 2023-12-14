@@ -1,0 +1,141 @@
+// Mode.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+using namespace std;
+int main()
+{
+	int const size = 50;
+	int arr[size], n;
+	cout << "Enter the size of Array :";
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Enter the " << i + 1 << " number : ";
+		cin >> arr[i];
+	}
+	int occ[size],mode[size];
+	int oc,b, m = 0;
+	for (int k = 0; k < n; k++)
+	{
+		 b = 0;
+		for(int a=k;a>0;a--)
+		{
+			if (arr[k]==arr[a-1])
+			{
+				b = 1;
+				break;
+			}	
+		}
+		if (b==1)
+		{
+			continue;
+		}
+	    oc = 2;
+		for(int j=k+1;j<size;j++)
+		{
+			if (arr[k]==arr[j])
+			{
+				occ[m] = oc;
+				mode[m] = arr[k];
+				oc++;
+			}
+		}
+		if (oc!=2)
+		{
+			m++;
+		}
+	}
+	if (m!=0)
+	{
+		int max, w = 0;
+		max = occ[0];
+		for (int q = 1; q < m; q++)
+		{
+			if (occ[q] > max)
+			{
+				max = occ[q];
+				w = q;
+			}
+		}
+		int md = 0,x=0;
+		for(int u=w+1;u<m;u++)
+		{
+			if (occ[u]==occ[w])
+			{
+				md = md + mode[u];
+				x++;
+			}
+		}
+		double result;
+		result = (mode[w] + md*1.0) / (1 + x);
+		cout << "The Mode is " << result << endl;
+
+	}
+	else
+	{
+		cout << "The mode is zero because all the numbers repeated once" << endl;
+	}
+	
+	
+}	
+
+
+
+
+// Mode.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+using namespace std;
+int main()
+{
+	int const size = 50;
+	int arr[size], n;
+	cout << "Enter the size of Array :";
+	cin >> n;
+	for (int i = 0; i < n; i++)
+	{
+		cout << "Enter the " << i + 1 << " number : ";
+		cin >> arr[i];
+	}
+	int occ[size], mode[size];
+	int oc, b, m = 0;
+	for (int k = 0; k < n; k++)
+	{
+		b = 0;
+		for (int a = k; a > 0; a--)
+		{
+			if (arr[k] == arr[a - 1])
+			{
+				b = 1;
+				break;
+			}
+		}
+		if (b == 1)
+		{
+			continue;
+		}
+		oc = 2;
+		for (int j = k + 1; j < size; j++)
+		{
+			if (arr[k] == arr[j])
+			{
+				occ[m] = oc;
+				mode[m] = arr[k];
+				oc++;
+			}
+		}
+		if (oc != 2)
+		{
+			m++;
+		}
+	}
+	for (int l = 0; l < m; l++)
+	{
+		cout << "The Number " << mode[l] << " repeated  " << occ[l] << " times in a Array" << endl;
+
+	}
+}
+
+

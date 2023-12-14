@@ -1,0 +1,348 @@
+// Inheritence Practice.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include"derived.h"
+#include <iostream>
+using namespace std;
+int main()
+{
+	Base* P[4];
+	P[0] = new Derived;
+	P[1] = new Derived;
+	P[2] = new Derived;
+    
+}
+
+
+#pragma once
+#include<iostream>
+using namespace std;
+class Base
+{
+	int* arr;
+	int size;
+public:
+	Base(int* a = nullptr, int = 0);
+	Base(const Base&);
+	virtual ~Base();
+	const Base& operator=(const Base&);
+	const Base& operator+=(const Base&);
+	const Base& operator-=(const Base&);
+	Base operator+(const Base&);
+	Base operator-(const Base&);
+	Base operator*(const Base&);
+	Base operator/(const Base&);
+	bool operator==(const Base&);
+	bool operator<(const Base&);
+	bool operator>(const Base&);
+	bool operator<=(const Base&);
+	bool operator>=(const Base&);
+	bool operator!=(const Base&);
+	int operator[](int) const;
+	int& operator[](int);
+	Base operator()(int, int);
+	friend istream& operator>>(istream&, Base&);
+	friend ostream& operator<<(ostream&, const Base&);
+	
+};
+
+
+#pragma once
+#include"Base.h"
+class Derived :public Base
+{
+public:
+	Derived();
+	Derived(const Derived&);
+	~Derived();
+	friend istream& operator>>(istream&, Derived&);
+	friend ostream& operator<<(ostream&, const Derived&);
+	const Derived& operator=(const Derived&);
+};
+
+
+#include"base.h"
+Base::Base(int* a , int s )
+{
+	size = s;
+	if (size)
+	{
+		arr = new int[size];
+		for (int i=0;i<size;i++)
+		{
+			arr[i] = a[i];
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+	cout << "Base Class  Constructor Called" << endl;
+}
+Base::Base(const Base& b)
+{
+	if (size)
+	{
+		delete[] arr;
+	}
+	size = b.size;
+	if (size)
+	{
+		arr = new int[size];
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = b.arr[i];
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+	cout << "Base Class Copy Constructor Called" << endl;
+}
+Base::~Base()
+{
+	if (size)
+	{
+		delete[] arr;
+	}
+	cout << "Base Class Destructor Called" << endl;
+}
+const Base& Base::operator=(const Base& b)
+{
+	if (this!=&b)
+	{
+		if (size)
+		{
+			delete[]arr;
+		}
+		size = b.size;
+		if (size)
+		{
+			arr = new int[size];
+			for (int i = 0; i < size; i++)
+			{
+				arr[i] = b.arr[i];
+			}
+		}
+		else
+		{
+			arr = nullptr;
+		}
+	}
+	return *this;
+}
+const Base& Base::operator+=(const Base& b)
+{
+	if (size&&b.size)
+	{
+		for (int i=0;i<size;i++)
+		{
+			arr[i] = arr[i] + b.arr[i];
+		}
+	}
+	if(!size&&b.size)
+	{
+		size = b.size;
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = b.arr[i];
+		}
+	}
+	return *this;
+}
+const Base& Base::operator-=(const Base& b)
+{
+	if (size && b.size)
+	{
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = arr[i] - b.arr[i];
+		}
+	}
+	if (!size && b.size)
+	{
+		size = b.size;
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = b.arr[i];
+		}
+	}
+	return *this;
+}
+Base Base::operator+(const Base& b)
+{
+	Base temp;
+	if (size=b.size)
+	{
+		temp.size = size;
+		temp.arr = new int[temp.size];
+		for (int i = 0; i < size; i++)
+		{
+			temp.arr[i]= arr[i]+b.arr[i];
+		}
+		return temp;
+	}
+	else
+	{
+		return*this;
+	}
+}
+Base Base::operator-(const Base& b)
+{
+	Base temp;
+	if (size = b.size)
+	{
+		temp.size = size;
+		temp.arr = new int[temp.size];
+		for (int i = 0; i < size; i++)
+		{
+			temp.arr[i] = arr[i] - b.arr[i];
+		}
+		return temp;
+	}
+	else
+	{
+		return*this;
+	}
+}
+Base Base::operator*(const Base& b)
+{
+	Base temp;
+	if (size = b.size)
+	{
+		temp.size = size;
+		temp.arr = new int[temp.size];
+		for (int i = 0; i < size; i++)
+		{
+			temp.arr[i] = arr[i] * b.arr[i];
+		}
+		return temp;
+	}
+	else
+	{
+		return*this;
+	}
+}
+Base Base::operator/(const Base& b)
+{
+	Base temp;
+	if (size = b.size)
+	{
+		temp.size = size;
+		temp.arr = new int[temp.size];
+		for (int i = 0; i < size; i++)
+		{
+			temp.arr[i] = arr[i] / b.arr[i];
+		}
+		return temp;
+	}
+	else
+	{
+		return*this;
+	}
+}
+bool Base::operator==(const Base& b)
+{
+	return (size == b.size);
+}
+bool Base::operator<(const Base& b)
+{
+	return (size < b.size);
+
+}
+bool Base::operator>(const Base& b)
+{
+	return (size > b.size);
+}
+bool Base::operator<=(const Base& b)
+{
+	return (size <= b.size);
+}
+bool Base::operator>=(const Base& b)
+{
+	return (size >= b.size);
+}
+bool Base::operator!=(const Base& b)
+{
+	return (size != b.size);
+}
+int Base::operator[](int i) const
+{
+	return arr[i];
+}
+int& Base::operator[](int i)
+{
+	return arr[i];
+}
+Base Base::operator()(int si, int n)
+{
+	if ((si < size && si >= 0) && (n <= size - si))
+	{
+		Base temp;
+		temp.size = n;
+		temp.arr = new int[temp.size];
+		for (int i=0;i<n;i++)
+		{
+			temp.arr[i] = arr[i + si];
+		}
+		return temp;
+	}
+	else
+	{
+		return *this;
+	}
+}
+istream& operator>>(istream& input, Base& b)
+{
+	cout << "Enter the Size : ";
+	input >> b.size;
+	b.arr = new int[b.size];
+	for (int i=0;i<b.size;i++)
+	{
+		cout << "Enter the Value : ";
+		input >> b.arr[i];
+	}
+	return input;
+}
+ostream& operator<<(ostream& output, const Base& b)
+{
+	output << "{";
+	for (int i = 0; i < b.size; i++)
+	{
+		output << b.arr[i] << " ";
+	}
+	output << "}" << endl;
+	return output;
+}
+
+
+
+
+include"derived.h"
+Derived::Derived():Base()
+{
+	cout << "Derived Constructor Called" << endl;
+}
+Derived::Derived(const Derived& d):Base(d)
+{
+	cout << "Derived Copy Constructor Called" << endl;
+}
+Derived::~Derived()
+{
+	cout << "Derived Destructor Called" << endl;
+}
+istream& operator>>(istream& input, Derived& d)
+{
+	input >> (Base&)d;
+	return input;
+}
+ostream& operator<<(ostream& output, const Derived& d)
+{
+	output << (const Base&)d;
+	return output;
+}
+const Derived& Derived::operator=(const Derived& d)
+{
+	Base::operator=(d);
+	return*this;
+}

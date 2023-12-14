@@ -1,0 +1,349 @@
+#pragma once
+#include<iostream>
+using namespace std;
+class Matrix
+{
+	int** matrix;
+	int row;
+	int col;
+public:
+	Matrix();
+	Matrix(int, int);
+	Matrix(const Matrix&);
+	~Matrix();
+	const Matrix& operator=(const Matrix&);
+	Matrix operator+(const Matrix&);
+	Matrix operator-(const Matrix&);
+	Matrix operator*(const Matrix&);
+	const Matrix& operator+=(const Matrix&);
+	const Matrix& operator-=(const Matrix&);
+	//const Matrix& operator*=(const Matrix&);
+	int operator()(int, int) const;
+	int& operator()(int, int);
+	friend ostream& operator<<(ostream& out, Matrix& m);
+	friend istream& operator>>(istream& inp, Matrix& m);
+};
+
+
+
+#include<iostream>
+#include"matrix.h"
+#include<iomanip>
+#include <cmath>
+using namespace std;
+Matrix::Matrix()
+{
+	row = 0;
+	col = 0;
+	matrix = nullptr;
+}
+Matrix::Matrix(int r,int c)
+{
+	row = (r <= 0) ? 2 : r;
+	col = (c <= 0) ? 2 : c;
+	matrix = new int* [row];
+	for (int i=0;i<row;i++)
+	{
+		matrix[i] = new int[col];
+	}
+	for (int i = 0; i < row; i++)
+	{
+		for (int j = 0; j < col; j++)
+		{
+			matrix[i][j] = 0;
+		}
+	}
+
+}
+Matrix::Matrix(const Matrix& m)
+{
+	if (row>1)
+	{
+		for (int i = 0; i < row; i++)
+		{
+			delete matrix[i];
+		}
+		delete[]matrix;
+	}
+	if (!m.row)
+	{
+		row = 0;
+		col = 0;
+		matrix = nullptr;
+	}
+	else
+	{
+		row = m.row;
+		col = m.col;
+		matrix = new int* [row];
+		for (int i = 0; i < row; i++)
+		{
+			matrix[i] = new int[col];
+		}
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				matrix[i][j] = m.matrix[i][j];
+			}
+		}
+	}
+}
+Matrix::~Matrix()
+{
+	if (row)
+	{
+		for (int i = 0; i < row; i++)
+		{
+			delete [] matrix[i];
+		}
+		delete[]matrix;
+	}
+	
+}
+const Matrix& Matrix::operator=(const Matrix& m)
+{
+	if (this!=&m)
+	{
+
+		if (!m.row)
+		{
+			row = 0;
+			col = 0;
+			matrix = nullptr;
+		}
+		else
+		{
+			if (row)
+			{
+				for (int i = 0; i < row; i++)
+				{
+					delete matrix[i];
+				}
+				delete[]matrix;
+			}
+			row = m.row;
+			col = m.col;
+			matrix = new int* [row];
+			for (int i = 0; i < row; i++)
+			{
+				matrix[i] = new int[col];
+			}
+			for (int i = 0; i < row; i++)
+			{
+				for (int j = 0; j < col; j++)
+				{
+					matrix[i][j] = m.matrix[i][j];
+				}
+			}
+		}
+	}
+	return *this;
+}
+Matrix Matrix::operator+(const Matrix& m)
+{
+	if (!row)
+	{
+		return m;
+	}
+	else if (!(m.row) || (row!=m.row) || (col!=m.col))
+	{
+		return *this;
+	}
+	else
+	{
+		Matrix temp(row, col);
+		for (int i = 0; i < temp.row; i++)
+		{
+			for (int j = 0; j < temp.col; j++)
+			{
+				temp.matrix[i][j] = matrix[i][j] + m.matrix[i][j];
+			}
+		}
+		return temp;
+	}
+}
+Matrix Matrix::operator-(const Matrix& m)
+{
+	if (!row)
+	{
+		return m;
+	}
+	else if (!(m.row) || (row != m.row) || (col != m.col))
+	{
+		return *this;
+	}
+	else
+	{
+		Matrix temp(row,col);
+		for (int i = 0; i < temp.row; i++)
+		{
+			for (int j = 0; j < temp.col; j++)
+			{
+				temp.matrix[i][j] = matrix[i][j] - m.matrix[i][j];
+			}
+		}
+		return temp;
+	}
+}
+Matrix Matrix::operator*(const Matrix& m)
+{
+	if (!row)
+	{
+		return m;
+	}
+    if ((!m.row) || (col!=m.row))
+	{
+		return *this;
+	}
+	else
+	{
+		Matrix temp(row,m.col);
+		for (int i = 0; i < temp.row; i++) 
+		{  
+			for (int j = 0; j < temp.col; j++) 
+			{ 
+				for (int k = 0; k < temp.col; ++k)
+				{
+					temp.matrix[i][j] += matrix[i][k] * m.matrix[k][j];
+				}
+			}
+		}
+		return temp;
+	}
+}
+const Matrix& Matrix::operator+=(const Matrix& m)
+{
+	if (!row)
+	{
+		row = m.row;
+		col = m.col;
+		matrix = new int* [row];
+		for (int i = 0; i < row; i++)
+		{
+			matrix[i] = new int[col];
+		}
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				matrix[i][j] = m.matrix[i][j];
+			}
+		}
+		return *this;
+	}
+	else if((row && m.row) && (row == m.row) && (col == m.col))
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				matrix[i][j] = matrix[i][j] + m.matrix[i][j];
+			}
+		}
+		return *this;
+	}
+	else
+	{
+		return *this;
+	}
+	
+}
+const Matrix& Matrix::operator-=(const Matrix& m)
+{
+	if (!row)
+	{
+		row = m.row;
+		col = m.col;
+		matrix = new int* [row];
+		for (int i = 0; i < row; i++)
+		{
+			matrix[i] = new int[col];
+		}
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				matrix[i][j] = m.matrix[i][j];
+			}
+		}
+		return *this;
+	}
+	else if ((row && m.row) && (row == m.row) && (col == m.col))
+	{
+		for (int i = 0; i < row; i++)
+		{
+			for (int j = 0; j < col; j++)
+			{
+				matrix[i][j] = matrix[i][j] - m.matrix[i][j];
+			}
+		}
+		return *this;
+	}
+	else
+	{
+		return *this;
+	}
+}
+int Matrix::operator()(int r, int c) const
+{
+	return matrix[r][c];
+}
+int& Matrix::operator()(int r, int c)
+{
+	return matrix[r][c];
+}
+ostream& operator<<(ostream& out, Matrix& m)
+{
+	for (int i = 0; i < m.row; i++)
+	{
+		for (int j = 0; j < m.col; j++)
+		{
+			out << setw(5) << m.matrix[i][j];
+
+		}
+		out << endl;
+	}
+	return out;
+}
+istream& operator>>(istream& inp, Matrix& m)
+{
+	if (m.row)
+	{
+		for (int i = 0; i < m.row; i++)
+		{
+			delete m.matrix[i];
+		}
+		delete[]m.matrix;
+	}
+	cout << "Enter the Row Size : ";
+	inp >> m.row;
+	while (m.row<=0)
+	{
+		cout << "Row size should be Greater than 0" << endl;
+		cout << "Enter the Row Size  : ";
+		inp >> m.row;
+	}
+	cout << "Enter the Column Size : ";
+	inp >> m.col;
+	while (m.col <= 0)
+	{
+		cout << "Column size should be Greater than 0" << endl;
+		cout << "Enter the Column Size  : ";
+		inp >> m.col;
+	}
+	m.matrix = new int* [m.row];
+	for (int i = 0; i < m.row; i++)
+	{
+		m.matrix[i] = new int[m.col];
+	}
+	for (int i = 0; i < m.row; i++)
+	{
+		for (int j = 0; j < m.col; j++)
+		{
+			cout << "Enter the number at [" << i << "]" << "[" << j << "] :";
+			inp>> m.matrix[i][j];
+		}
+	}
+	return inp;
+}

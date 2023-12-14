@@ -1,0 +1,147 @@
+#pragma once
+#include<iostream>
+using namespace std;
+class Date
+{
+	int d, m, y;
+public:
+	Date(int a = 1, int b = 1, int c = 2000)
+	{
+		d = a;
+		m = b;
+		y = c;
+	}
+	friend ostream & operator<<(ostream & out, Date & d);
+	friend istream & operator>>(istream & inp, Date & d);
+	bool operator<( Date d);
+	Date operator--();
+	Date operator--(int);
+};
+
+// Implementation
+
+#include<iostream>
+using namespace std;
+#include"date.h"
+ostream & operator<<(ostream & out, Date & d)
+{
+	out << "The Date is : " << d.d << "/" << d.m << "/" << d.y << endl;
+	return out;
+
+}
+istream & operator>>(istream & inp, Date & d)
+{
+	cout << endl;
+	cout << "Enter the Year  : ";
+	inp >> d.y;
+	while (d.y<1900 && d.y > 2300)
+	{
+		cout << "Enter the Year 1900-2300  : ";
+		inp >> d.y;
+	}
+	cout << "Enter the Month  : ";
+	inp >> d.m;
+	while (d.m < 1 && d.m > 12)
+	{
+		cout << "Enter the Year 1-12  : ";
+		inp >> d.m;
+	}
+	if (d.m==2)
+	{
+		cout << "Enter the Date : ";
+		inp >> d.d;
+		while (d.d<1 && d.d >28)
+		{
+			cout << "Enter the Date 1-28 : ";
+			inp >> d.d;
+		}
+	}
+	else if (d.m == 4 || d.m == 6 || d.m==6 || d.m == 9 || d.m==11)
+	{
+		
+			cout << "Enter the Date : ";
+			inp >> d.d;
+			while (d.d < 1 && d.d >30)
+			{
+				cout << "Enter the Date 1-30 : ";
+				inp >> d.d;
+			}
+	}
+	else 
+	{
+		cout << "Enter the Date : ";
+		inp >> d.d;
+		while (d.d < 1 && d.d >31)
+		{
+			cout << "Enter the Date 1-31 : ";
+			inp >> d.d;
+		}
+
+	}
+	return inp;
+}
+bool Date::operator<( Date  d)
+{
+	if (this-> d == d.d)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+Date Date::operator--()
+{
+	if (d == 1 && m == 1)
+	{
+		y--;
+		d = 31; 
+		m = 12;
+	}
+	else if (d == 1 && m!=1)
+	{
+		m--;
+		if (m == 4 || m == 6 || m == 6 || m == 9 || m == 11)
+		{
+			d = 30;
+		}
+		else
+		{
+			d = 31;
+		}
+	}
+    else 
+	{
+		d--;
+	}
+	return *this;
+}
+Date Date::operator--(int)
+{
+	Date t = *this;
+	if (d == 1 && m == 1)
+	{
+		y--;
+		d = 31;
+		m = 12;
+	}
+	else if (d == 1 && m != 1)
+	{
+		m--;
+		if (m == 4 || m == 6 || m == 6 || m == 9 || m == 11)
+		{
+			d = 30;
+		}
+		else
+		{
+			d = 31;
+		}
+	}
+	else
+	{
+		d--;
+	}
+	return t;
+}
+

@@ -1,0 +1,170 @@
+Main
+
+
+// Array Class.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+#include"array.h"
+using namespace std;
+int main()
+{
+	int a[2] = { 0,1};
+}
+
+
+
+
+Header File
+
+
+
+#include"array.h"
+Array::Array(int* a, int s)
+{
+	size = (s < 0)? 5:s;
+	if (size)
+	{
+		arr = new int[size];
+		for (int i=0;i<size;i++)
+		{
+			arr[i] = a[i];
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+
+}
+Array::Array(int s )
+{
+	size = (s < 0) ? 5 : s;
+	if (size)
+	{
+		arr = new int[size];
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = 0;
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+}
+Array::~Array()
+{
+	if (size)
+		delete[]arr;
+}
+Array::Array(const Array& a)
+{
+	size = a.size;
+	if (size)
+	{
+		arr = new int[size];
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = a.arr[i];
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+
+}
+const Array& Array::operator=(const Array& a)
+{
+	if (this!=&a)
+	{
+		if (size)
+		{
+			delete[]arr;
+		}
+		size = a.size;
+		if (size)
+		{
+			arr = new int[size];
+			for (int i = 0; i < size; i++)
+			{
+				arr[i] = a.arr[i];
+			}
+		}
+		else
+		{
+			arr = nullptr;
+		}
+
+	}
+	return *this;
+}
+int& Array::operator[](int a)
+{
+	return arr[a];
+}
+int Array::operator[](int a) const
+{
+	return arr[a];
+}
+ostream& operator<<(ostream& out, const Array& a)
+{
+	out << "{";
+	for (int i=0;i<a.size;i++)
+	{
+		out << a[i] << ",";
+	}
+	out << "}";
+	return out;
+}
+istream& operator>>(istream& in, Array& a)
+{
+	cout << "Enter the Size : ";
+	in >> a.size;
+	a.size = (a.size <= 0) ? 5 : a.size;
+	for (int i=0;i<a.size;i++)
+	{
+		cout << "Enter the Value : ";
+		in >> a[i];
+	}
+	return in;
+}
+Array Array::operator()(int si, int n)
+{
+	if (si<0|| n>=size-si)
+	{
+		return;
+	}
+
+
+
+}
+
+
+Implementation
+
+
+#pragma once
+#include<iostream>
+using namespace std;
+class Array
+{
+	int *arr;
+	int size;
+	friend ostream& operator<<(ostream&, const Array&);
+	friend istream& operator>>(istream&, Array&);
+public:
+	Array(int* a, int s);
+	Array(int = 0);
+	~Array();
+	Array(const Array& );
+	const Array& operator=(const Array&);
+	int& operator[](int);
+	int operator[](int) const;
+	Array operator()(int,int);
+};
+
+
+
+

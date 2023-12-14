@@ -1,0 +1,79 @@
+// Templates.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include <iostream>
+using namespace std;
+template <typename T>
+void myswap(T& a, T& b);
+template <typename T>
+T smallest(T [], int );
+template <class RT,class T1, class T2>
+RT small(T1, T2);
+template <class T1, class T2>
+auto smalla(T1, T2);
+int main()
+{
+    /// Swap Function /////
+    int a = 10, b = 20;
+    cout << "a=" << a << "   b=" << b << endl;
+    myswap(a,b);
+    cout << "After Swapping" << endl;
+    cout << "a=" << a << "   b="<<b << endl;
+    char aa = 'a', bb = 'b';
+    cout << "a=" << aa << "   b=" << bb << endl;
+    myswap(aa, bb);
+    cout << "After Swapping" << endl;
+    cout << "a=" << aa << "   b=" << bb << endl;
+
+    //////Smallest Function//////
+    string s[3] = {"Bilal","Waleed","Ahsan"};
+    cout << "The Smallest is : " << smallest(s, 3) << endl;
+    int abc[5] = { 1,2,3,0,4 };
+    cout << "The Smallest is : " << smallest(abc,5) << endl;
+
+    //// Different Parameter Types /////
+   /* int d = 20;
+    double f = 40.9;
+    cout << "The Smallest is : " << small<double>(d,f) << endl;
+    /// This will also work 
+    cout << "The Smallest is : " << small<double,int,double>(d,f) << endl;*/
+    /// Method instead of writing Return Type Parameter
+    int d = 20;
+    double f = 40.9;
+    cout << "The Smallest is : " << smalla(d,f) << endl;
+}
+template <typename T>
+void myswap(T& a, T& b)
+{
+    T temp;
+    temp = a;
+    a = b;
+    b = temp;
+}
+template <typename T>
+T smallest(T s[], int size)
+{
+    T small = s[0];
+    for (int i=1;i<size;i++)
+    {
+        if (s[i] < small)
+            small = s[i];
+    }
+    return small;
+}
+template <class RT,class T1,class T2>
+RT small(T1 a, T2 b)
+{
+    if (a < b)
+        return a;
+    else
+        return b;
+}
+/// Method instead of writing Return Type Parameter
+template <class T1, class T2>
+auto smalla(T1 a, T2 b) 
+{
+    if (a < b)
+        return a;
+    else
+        return b;
+}

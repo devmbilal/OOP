@@ -1,0 +1,187 @@
+Main
+
+
+#include<iostream>
+#include "point.h"
+#include "circle.h"
+using namespace std;
+int main() {
+	point p1(1, 2), p2(2, 4);
+	circle c1;
+	circle c2(3.5, p2);
+	cout << "p1  =" << p1 << endl;
+	cout << "p2  =" << p1 << endl;
+	cout << "c2  =" << c2 << endl;
+	p1.show(2);
+	c2.point::show(2);
+	
+
+	return 0;
+
+}
+
+
+Circle Header File
+
+
+
+#pragma once
+#include "point.h"
+class circle : public point {
+private:
+	double radius;
+	friend ostream& operator << (ostream&, const circle&);
+public:
+	circle();
+	circle(double);
+	circle(double, double, double);
+	circle(double, const point&);
+	circle(const circle&);
+
+	~circle();
+	void setradius(double);
+	double getradius() const;
+	double getdiameter() const;
+	double getarea() const;
+	double getcircumference() const;
+	void show()
+	{
+		cout << "Radius=" << radius << endl;
+
+	}
+
+};
+
+
+Circle Implementation
+
+
+
+#include "circle.h"
+#include <iostream>
+using namespace std;
+circle::circle() :point(), radius(1.0) {
+	cout << "Circle default constructor called with radius = " << radius << endl;
+}
+
+circle::circle(double r) : point(), radius(r > 0 ? r : 1.0) {
+	cout << "Circle perametrized constructor called with radius = " << radius << endl;
+}
+circle::circle(double r, double xx, double yy) : point(xx, yy), radius(r > 0 ? r : 1.0)
+{
+	cout << "Circle perametrized constructor called with radius = " << radius << endl;
+
+}
+
+circle::circle(double r, const point& p) : point(p), radius(r > 0 ? r : 1.0)
+{
+	cout << "Circle perametrized constructor called with 2 parameter" << endl;
+
+}
+
+circle::circle(const circle& c) : point(c), radius(c.radius) 
+{
+
+}
+circle::~circle()
+{
+	cout << "Circle destructor with radius = " << radius << endl;
+}
+
+void circle::setradius(double r) {
+	radius = r > 0 ? r : 1.0;
+}
+
+double circle::getradius()const {
+	return radius;
+}
+
+double circle::getdiameter()const {
+	return 2 * radius;
+}
+
+double circle::getarea()const {
+	return 3.14159 * radius * radius;
+}
+
+double circle::getcircumference()const {
+	return 2 * 3.14159 * radius;
+}
+ostream& operator <<(ostream& out, const circle& c) {
+	out << "Center of circle is at " << (const point&)c << endl;
+	out << "Radius of Circle = " << c.radius << endl;
+	return out;
+}
+
+
+Point Header
+
+#pragma once
+#include <iostream>
+using namespace std;
+class point {
+	double x, y;
+	friend ostream& operator <<(ostream&, const point&);
+
+public:
+
+	point();
+	point(double, double);
+	~point();
+	void setX(double);
+	void setY(double);
+	void set(double, double);
+	double getX() const;
+	double getY() const;
+	void show(int a)
+	{
+		cout << "x=" << a << endl;
+		cout << "y=" << a << endl;
+	}
+
+};
+
+
+
+Point Implementation
+
+
+#include "point.h"
+#include <iostream>
+using namespace std;
+point::point() : x(0.0), y(0.0) {
+	cout << "Point default constructor" << endl;
+}
+
+point::point(double xx, double yy) : x(xx), y(yy) {
+	cout << "Point Parametrized constructor" << endl;
+}
+
+point::~point() {
+	cout << "Point destructor with x= " << x << " any y =  " << y << endl;
+}
+
+void point::setX(double xx) {
+	x = xx;
+}
+
+void point::setY(double YY) {
+	y = YY;
+}
+void point::set(double xx, double yy) {
+	x = xx;
+	y = yy;
+}
+double point::getX() const {
+	return x;
+}
+double point::getY() const {
+	return y;
+}
+ostream& operator << (ostream& out, const point& p) {
+	out << "(" << p.x << " , " << p.y << ")";
+	return out;
+}
+ 
+
+

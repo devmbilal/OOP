@@ -1,0 +1,324 @@
+#pragma once
+#include<iostream>
+using namespace std;
+class Mystring
+{
+	char* str;
+	int size;
+public:
+	Mystring();
+	Mystring(int);
+	Mystring(char*);
+	Mystring(const Mystring&);
+	~Mystring();
+	bool operator<(const Mystring&);
+	bool operator>(const Mystring&);
+	bool operator<=(const Mystring&);
+	bool operator>=(const Mystring&);
+	bool operator!=(const Mystring&);
+	Mystring operator+(const Mystring&);
+	const Mystring& operator=(const Mystring&);
+	Mystring& operator+=(const Mystring&);
+	Mystring operator()(int,int);
+	char operator[](int) const;
+	char& operator[](int);
+	int getlength();
+	void getline(Mystring& s);
+	friend ostream& operator<<(ostream&, Mystring&);
+	friend istream& operator>>(istream&, Mystring&);
+};
+
+#include"string.h"
+#include<iostream>
+using namespace std;
+Mystring::Mystring()
+{
+	size = 0;
+	str = nullptr;
+}
+Mystring::Mystring(int s)
+{
+	size = s;
+	str = new char[size];
+	str[0] = '\0';
+}
+Mystring::Mystring(char* s)
+{
+	int i=0, j;
+	for (j = 0; s[j] != '\0'; j++){}
+	size = j+1;
+	str = new char[size];
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';	
+}
+Mystring::Mystring(const Mystring& s)
+{
+	size = s.size;
+	str = new char[size];
+	int i = 0;
+	while (s.str[i])
+	{
+		str[i] = s.str[i];
+		i++;
+	}
+	str[i] = '\0';
+}
+Mystring::~Mystring()
+{
+	if (size>0)
+	{
+		delete[]str;
+	}	
+}
+bool Mystring::operator<(const Mystring& s)
+{
+	int i;
+	for (i = 0; str[i] != '\0' && s.str[i] != '\0'; i++)
+	{
+
+		if (str[i] == s.str[i])
+		{
+			continue;
+		}
+		else
+		{
+			return (str[i] < s.str[i]);
+		}
+	}
+	if (str[i] == '\0' && s.str[i] == '\0')
+	{
+		return 0;
+	}
+	if (str[i] == '\0')
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+bool Mystring::operator>(const Mystring& s)
+{
+	int i;
+	for (i = 0; str[i] != '\0' && s.str[i] != '\0'; i++)
+	{
+
+		if (str[i] == s.str[i])
+		{
+			continue;
+		}
+		else
+		{
+			return (str[i] > s.str[i]);
+		}
+	}
+	if (str[i] == '\0' && s.str[i] == '\0')
+	{
+		return 0;
+	}
+	if (str[i] == '\0')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+bool Mystring::operator<=(const Mystring& s)
+{
+	int i;
+	for (i = 0; str[i] != '\0' && s.str[i] != '\0'; i++)
+	{
+
+		if (str[i] == s.str[i])
+		{
+			continue;
+		}
+		else
+		{
+			return (str[i] <= s.str[i]);
+		}
+	}
+	if (str[i] == '\0' && s.str[i] == '\0')
+	{
+		return 1;
+	}
+	if (str[i] == '\0')
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+}
+bool Mystring::operator>=(const Mystring& s)
+{
+
+	int i;
+	for (i = 0; str[i] != '\0' && s.str[i] != '\0'; i++)
+	{
+
+		if (str[i] == s.str[i])
+		{
+			continue;
+		}
+		else
+		{
+			return (str[i] > s.str[i]);
+		}
+	}
+	if (str[i] == '\0' && s.str[i] == '\0')
+	{
+		return 1;
+	}
+	if (str[i] == '\0')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+bool Mystring::operator!=(const Mystring& s)
+{
+
+	int i;
+	for (i = 0; str[i] != '\0' && s.str[i] != '\0'; i++)
+	{
+
+		if (str[i] == s.str[i])
+		{
+			continue;
+		}
+		else
+		{
+			return (str[i] != s.str[i]);
+		}
+	}
+	if (str[i] == '\0' && s.str[i] == '\0')
+	{
+		return 0;
+	}
+	else
+	{
+		return 1;
+	}
+}
+Mystring Mystring::operator+(const Mystring& s)
+{
+	Mystring temp;
+	int i=0,z=0, j;
+	temp.size = size + s.size-1;
+	temp.str = new char[size];
+	while (str[i])
+	{
+		temp.str[i] = str[i];
+		i++;
+	}
+	while (s.str[z])
+	{
+		temp.str[i] = s.str[z];
+		z++;
+		i++;
+	}
+	temp.str[i] = '\0';
+	return temp;
+}
+const Mystring& Mystring::operator=(const Mystring& s)
+{
+	if (this!=&s)
+	{
+		if (size && s.size)
+		{
+			delete[]str;
+		}
+		if (s.size)
+		{
+			size = s.size;
+			str = new char[size];
+			int i;
+			for (i=0;i<size-1;i++)
+			{
+				str[i] = s.str[i];
+			}
+			str[i]='\0';
+		}
+	}
+	return *this;
+}
+Mystring& Mystring::operator+=(const Mystring& s)
+{
+	int i=size, j;
+	for(j=0;s.str[i]!='\0';j++)
+	{
+		str[i] = s.str[j];
+		i++;
+	}
+	str[j] = '\0';
+	size = j;
+	return*this;
+}
+Mystring Mystring::operator()(int si, int s)
+{
+	Mystring temp;
+	if (si<0 || si>=size)
+	{
+		temp.size = 0;
+		temp.str[0] = '\0';
+	}
+	else
+	{
+		int i;
+		for (i=0;str[i]!='\0'&& i<s;i++)
+		{
+			temp.str[i] = str[i + si];
+		}
+		temp.str[i] = '\0';
+		temp.size = i;
+	}
+	return temp;
+}
+char Mystring::operator[](int i) const
+{
+	return str[i];
+}
+char& Mystring::operator[](int i)
+{
+	return str[i];
+}
+int Mystring::getlength()
+{
+	return size;
+}
+void Mystring::getline(Mystring &s)
+{
+        int i = 0;
+		cout << "Enter the String: ";
+		while (i < s.size || s.str[i] != '\0')
+		{
+			cin >> s.str[i];
+			i++;
+		}
+}
+ostream& operator<<(ostream& out, Mystring& s)
+{
+	out << "The String is : " << s.str << endl;
+	return out;
+}
+istream& operator>>(istream& inp, Mystring& s)
+{
+
+	cout << "Enter the Size : ";
+	inp >> s.size;
+	s.getline(s);
+	return inp;
+}
+

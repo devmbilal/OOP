@@ -1,0 +1,213 @@
+// Array Template.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+#include <iostream>
+using namespace std;
+#include"arraytemp.h"
+#include"date.h"
+#include"person.h"
+int main()
+{
+	Array<int> a;
+	cin >> a;
+	cout << a;
+	Array<Person> p;
+	cin >> p;
+	cout << p;
+	Array<Date> d;
+	cin >> d;
+	cout << d;
+}
+
+
+
+
+#pragma once
+#include"date.h"
+#include"person.h"
+template<class T>
+class Array
+{
+	T* arr;
+	int size;
+public:
+	Array(int = 0);
+	template<class T>
+	friend istream& operator>>(istream&, Array<T>&);
+	template<class T>
+	friend ostream& operator<<(ostream&, const Array<T>&);
+	T operator[](int) const;
+	T& operator[](int);
+
+};
+template<class T>
+Array<T>::Array(int s)
+{
+	size = s;
+	if (size)
+	{
+		arr = new T[size];
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = T();
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+}
+template<class T>
+T Array<T>::operator[](int i) const
+{
+	return arr[i];
+}
+template<class T>
+T& Array<T>::operator[](int i)
+{
+	return arr[i];
+}
+template<class T>
+istream& operator>>(istream& input, Array<T>& a)
+{
+	cout << "Enter the size : ";
+	input >> a.size;
+	a.arr = new T[a.size];
+	for (int i = 0; i < a.size; i++)
+	{
+		cout << "Enter the Value : ";
+		input >> a.arr[i];
+	}
+	return input;
+}
+template<class T>
+ostream& operator<<(ostream& output, const Array<T>& a)
+{
+	for (int i = 0; i < a.size; i++)
+	{
+		output << "The Value is : " << a.arr[i] << endl;
+	}
+	return output;
+}
+
+
+
+#pragma once
+#include"date.h"
+#include"person.h"
+template<class T>
+class Array
+{
+	T* arr;
+	int size;
+public:
+	Array(int = 0);
+	template<class T>
+	friend istream& operator>>(istream&, Array<T>&);
+	template<class T>
+	friend ostream& operator<<(ostream&, const Array<T>&);
+	T operator[](int) const;
+	T& operator[](int);
+
+};
+template<class T>
+Array<T>::Array(int s)
+{
+	size = s;
+	if (size)
+	{
+		arr = new T[size];
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = T();
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+}
+template<class T>
+T Array<T>::operator[](int i) const
+{
+	return arr[i];
+}
+template<class T>
+T& Array<T>::operator[](int i)
+{
+	return arr[i];
+}
+template<class T>
+istream& operator>>(istream& input, Array<T>& a)
+{
+	cout << "Enter the size : ";
+	input >> a.size;
+	a.arr = new T[a.size];
+	for (int i = 0; i < a.size; i++)
+	{
+		cout << "Enter the Value : ";
+		input >> a.arr[i];
+	}
+	return input;
+}
+template<class T>
+ostream& operator<<(ostream& output, const Array<T>& a)
+{
+	for (int i = 0; i < a.size; i++)
+	{
+		output << "The Value is : " << a.arr[i] << endl;
+	}
+	return output;
+}
+
+
+
+
+
+//#include"arraytemp.h"
+#include<iostream>
+using namespace std;
+//template<class T>
+Array<T>::Array(int s)
+{
+	size = s;
+	if (size)
+	{
+		arr = new T[size];
+		for (int i = 0; i < size; i++)
+		{
+			arr[i] = T();
+		}
+	}
+	else
+	{
+		arr = nullptr;
+	}
+}
+T Array<T>::operator[](int i) const
+{
+	return arr[i];
+}
+T& Array<T>::operator[](int i) 
+{
+	return arr[i];
+}
+istream& operator>>(istream& input, Array<T>& a)
+{
+	cout << "Enter the size : ";
+	input >> a.size;
+	arr = new T[a.size];
+	for (int i = 0; i < size; i++)
+	{
+		cout << "Enter the Value : ";
+		input >> arr[i];
+	}
+	return input;
+}
+ostream& operator<<(ostream& output, const Array<T>& a)
+{
+	for (int i = 0; i < a.size; i++)
+	{
+		output << "The Value is : " << arr[i] << endl;
+	}
+	return output;
+}

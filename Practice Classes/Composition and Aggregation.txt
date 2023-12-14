@@ -1,0 +1,102 @@
+// Comp and Agg.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//
+
+#include <iostream>
+#include"student.h";
+using namespace std;
+int main()
+{
+ Student s( 1,"bilal", 2, 2, 2);
+ char* a = s.getname();
+ cout << a;
+}
+
+#pragma once
+// Aggregation
+class Date
+{
+	int d, m, y;
+public:
+	Date();
+	Date(int, int, int);
+	void setdate(int,int,int);
+	int getd();
+	int getm();
+	int gety();
+};
+class Student
+{
+	int id;
+    char name[30];
+	Date dob;
+public:
+	Student();
+
+	Student(int, char[], const Date&);
+	Student(int, const char[],int,int,int);
+	void set(int, char[], const Date&);
+	int getid();
+	const Date& getdob();
+	char* getname()
+	{
+		char* kise_or_ko_b_tayakro = name;
+		return kise_or_ko_b_tayakro;
+	}
+};
+
+
+
+
+
+#include"student.h"
+#include<string>
+// Aggregation
+Date::Date()
+{
+	d = 1;
+	m = 1;
+	y = 1900;
+}
+Date::Date(int dd, int mm, int yy)
+{
+	d = dd;
+	m = mm;
+	y = yy;
+}
+void Date::setdate(int dd, int mm, int yy)
+{
+	d = dd;
+	m = mm;
+	y = yy;
+}
+int Date::getd()
+{
+	return d;
+}
+int Date::getm()
+{
+	return m;
+}
+int Date::gety()
+{
+	return y;
+}
+Student::Student():dob(),id(0),name("") {}
+Student::Student(int idd, char nn[], const Date& d):dob(d),id(idd)
+{
+	strcpy_s(name,nn);	
+}
+Student::Student(int idd, const  char nn[], int d, int m, int y):dob(d,m,y),id(idd)
+{
+	strcpy_s(name, nn);
+}
+void Student::set(int, char[], const Date&)
+{}
+int Student::getid()
+{
+	return id;
+}
+const Date& Student::getdob()
+{
+	return dob;
+}
