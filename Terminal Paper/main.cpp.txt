@@ -1,0 +1,52 @@
+// OOP Final.cpp : This file contains the 'main' function. Program execution begins and ends there.
+//  
+#include<iostream>
+using namespace std;
+#include"uni.h"
+#include"student.h"
+#include"teacher.h"
+#include"ta.h"
+#include"output.h"
+#include<string>
+#include"triplets.h"
+#include"tripletsd.h"
+
+int main()
+{
+    //  Outputs //
+   /* A obj1;
+    B obj2;
+    A* a = &obj1;
+    cout << a->h() << endl;
+    cout << a->j() << endl;
+    cout << a->g() << endl;
+
+    a = &obj2;
+
+    cout << a->h() << endl;
+    cout << a->j() << endl;
+    cout << a->g() << endl;*/
+
+
+    // Inheritence //
+    /*TA t;
+    cin >> t;
+    cout << t;*/
+
+
+    // Triplets //
+
+    /*Triplet<int> t(1,2,3);
+    cout << "The Largest is : " << t.largest(1, 2, 3) << endl;*/
+
+    //  Triplets Different Types //
+
+   /* Tripletd<int, double, int>t, t1(1, 2, 3), t2(4, 50.7, 6);
+    t = t1 + t2;
+    cout << t << endl;*/
+
+    Universitymember* U[3];
+    U[0] = new Student(2);
+    cout << U[0]->issuccessful();
+
+}

@@ -1,0 +1,42 @@
+#pragma once
+#include<string>
+#include<iostream>
+using namespace std;
+class Universitymember
+{
+	string name;
+	string department;
+public:
+	Universitymember(const char[] = "", const char[] = "");
+	friend istream& operator>>(istream&, Universitymember&);
+	friend ostream& operator<<(ostream&,  const Universitymember&);
+	virtual bool issuccessful() = 0;
+	virtual ~Universitymember(){}
+
+};
+
+
+#include<string>
+#include<iostream>
+using namespace std;
+#include"uni.h"
+Universitymember::Universitymember(const char a[] , const char b[])
+{
+	name = a;
+	department = b;
+}
+istream& operator>>(istream& input, Universitymember& u)
+{
+	cout << "Enter the Name:";
+	input >> u.name;
+	cout << "Enter the Department:";
+	input >> u.department;
+	return input;
+}
+ostream& operator<<(ostream& output, const Universitymember& u)
+{
+	output << "Name :" << u.name << endl;
+	output << "Department : " << u.department << endl;
+	return output;
+}
+

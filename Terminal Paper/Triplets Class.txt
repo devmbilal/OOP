@@ -1,0 +1,88 @@
+#pragma once
+#include<iostream>
+using namespace std;
+template<class T>
+class Triplet
+{
+	T a;
+	T b;
+	T c;
+public:
+	Triplet(T = T(), T = T(), T = T());
+	template<class T>
+	friend ostream& operator<<(ostream&, Triplet<T>&);
+   T largest(const T&, const T&, const T&);
+};
+template<class T>
+Triplet<T>::Triplet(T aa, T bb, T cc)
+{
+	a = aa;
+	b = bb;
+	c = cc;
+}
+template<class T>
+ostream& operator<<(ostream& output, Triplet<T>& t)
+{
+	cout << "The Value of First Element is : " << t.a << endl;
+	cout << "The Value of Second Element is : " << t.b << endl;
+	cout << "The Value of Third Element is : " << t.c << endl;
+}
+template<class T>
+T Triplet<T>::largest(const T& a, const T& b, const T& c)
+{
+	T lar = a;
+	if (b > lar)
+	{
+		lar = b;
+	}
+	if (c > lar)
+	{
+		lar = c;
+	}
+	return lar;
+}
+
+
+
+
+#pragma once
+#include<iostream>
+using namespace std;
+template<class T1,class T2,class T3>
+class Tripletd
+{
+	T1 a;
+	T2 b;
+	T3 c;
+public:
+	Tripletd(T1 = T1(), T2 = T2(), T3 = T3());
+	template<class T1, class T2, class T3>
+	friend ostream& operator<<(ostream&, Tripletd<T1,T2,T3>&);
+	template<class T1, class T2, class T3>
+	friend Tripletd<T1, T2, T3> operator+(const Tripletd<T1, T2, T3>&, const Tripletd<T1, T2, T3>&);
+	
+};
+template<class T1, class T2, class T3>
+Tripletd<T1,T2,T3>::Tripletd(T1 aa, T2 bb, T3 cc)
+{
+	a = aa;
+	b = bb;
+	c = cc;
+}
+template<class T1, class T2, class T3>
+ostream& operator<<(ostream& output, Tripletd<T1,T2,T3>& t)
+{
+	cout << "The Value of First Element is : " << t.a << endl;
+	cout << "The Value of Second Element is : " << t.b << endl;
+	cout << "The Value of Third Element is : " << t.c << endl;
+	return output;
+}
+template<class T1, class T2, class T3>
+Tripletd<T1, T2, T3> operator+(const Tripletd<T1, T2, T3>& t1, const Tripletd<T1, T2, T3>& t2)
+{
+	Tripletd<T1,T2,T3> temp;
+	temp.a = t1.a + t2.a;
+	temp.b = t1.b + t2.b;
+	temp.c = t1.c + t2.c;
+	return temp;
+}

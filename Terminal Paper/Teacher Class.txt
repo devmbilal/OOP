@@ -1,0 +1,59 @@
+#pragma once
+#include<string>
+#include<iostream>
+using namespace std;
+#include"student.h"
+#include"teacher.h"
+class TA :public Student, Teacher
+{
+	string sup;
+public:
+	TA(const char[] = "");
+	friend istream& operator>>(istream&,TA&);
+	friend ostream& operator<<(ostream&, const TA&);
+	virtual bool issuccessful();
+	virtual ~TA(){}
+};
+
+
+#include<string>
+#include<iostream>
+using namespace std;
+#include"teacher.h"
+Teacher::Teacher(const char d[], int c, int p, int s):Universitymember()
+{
+	des = d;
+	noc = c;
+	nop = p;
+	nos = s;
+}
+istream& operator>>(istream& input,Teacher& t)
+{
+	input >> (Universitymember&)t;
+	cout << "Enter the Designation :";
+	cin >> t.des;
+	cout << "Enter the Number of Publications :";
+	cin >> t.nop;
+	cout << "Enter the Number of Courses :";
+	cin >> t.noc;
+	cout << "Enter the Number of Students Serving :";
+	cin >> t.nos;
+	return input;
+}
+ostream& operator<<(ostream& output, const Teacher& t)
+{
+	output << "The Data of the Teacher is " << endl;
+	output << (const Universitymember&)t;
+	output << "Designation :" << t.des << endl;
+	output << "Number of Publications :" << t.nop << endl;
+	output << "Number of Courses :" << t.noc << endl;
+	output << "Number of Students Serving :" << t.nos << endl;
+	return output;
+}
+bool Teacher::issuccessful()
+{
+	if (nop > 20)
+		return true;
+	else
+		return false;
+}
